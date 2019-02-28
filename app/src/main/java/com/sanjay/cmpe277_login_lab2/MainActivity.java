@@ -1,6 +1,8 @@
 package com.sanjay.cmpe277_login_lab2;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,11 +13,17 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
 
+    public static final String MyPREFERENCES = "MyPrefs" ;
+    public static final String USERNAME = "USERNAME";
+
+
     DatabaseHelper db;
     private EditText userName;
     private EditText password;
     private Button login;
     private Button signUp;
+    SharedPreferences sharedpreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +36,9 @@ public class MainActivity extends AppCompatActivity {
         login = findViewById(R.id.login);
         signUp = findViewById(R.id.signUp);
 
-        userName.setText(getIntent().getStringExtra("USERNAME"));
+        userName.setText(getIntent().getStringExtra(USERNAME));
+
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +57,12 @@ public class MainActivity extends AppCompatActivity {
                 if (db.checkUserExists(user, pswd)) {
                     Toast.makeText(MainActivity.this, "Successfully logged in! ", Toast.LENGTH_SHORT).show();
 
-                    Intent moveToUserDetails = new Intent(MainActivity.this, RegistrationActivity.class);
+                    //Session management
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString(USERNAME, user);
+                    editor.commit();
+
+                    Intent moveToUserDetails = new Intent(MainActivity.this, UserDetailsActivity.class);
                     startActivity(moveToUserDetails);
 
                 } else {

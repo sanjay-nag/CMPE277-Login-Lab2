@@ -29,7 +29,7 @@ public class RegistrationActivity extends AppCompatActivity {
         register = findViewById(R.id.register);
         cancel = findViewById(R.id.cancel);
 
-        userName.setText(getIntent().getStringExtra("USERNAME"));
+        userName.setText(getIntent().getStringExtra(MainActivity.USERNAME));
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +50,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     if (db.addUser(user, pswd) > 0) {
                         Toast.makeText(RegistrationActivity.this, "You have successfully registered!", Toast.LENGTH_SHORT).show();
                         Intent moveToLoginIntent = new Intent(RegistrationActivity.this, MainActivity.class);
-                        moveToLoginIntent.putExtra("USERNAME", user);
+                        moveToLoginIntent.putExtra(MainActivity.USERNAME, user);
                         startActivity(moveToLoginIntent);
                     } else {
                         Toast.makeText(RegistrationActivity.this, "Registration Error!", Toast.LENGTH_SHORT).show();
