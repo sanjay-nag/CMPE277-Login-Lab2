@@ -63,12 +63,13 @@ public class MainActivity extends AppCompatActivity {
                     editor.commit();
 
                     Intent moveToUserDetails = new Intent(MainActivity.this, UserDetailsActivity.class);
+                    moveToUserDetails.putExtra(USERNAME, user);
                     startActivity(moveToUserDetails);
 
                 } else {
                     Toast.makeText(MainActivity.this, "Please register to login!", Toast.LENGTH_SHORT).show();
                     Intent moveToRegister = new Intent(MainActivity.this, RegistrationActivity.class);
-                    moveToRegister.putExtra("USERNAME", user);
+                    moveToRegister.putExtra(USERNAME, user);
                     startActivity(moveToRegister);
                 }
             }

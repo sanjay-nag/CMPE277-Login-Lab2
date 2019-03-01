@@ -31,7 +31,6 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="140dp"
         android:gravity="center"
-        android:text="User dummy is logged in"
         android:textAlignment="center"
         android:textAllCaps="true"
         android:visibility="visible"

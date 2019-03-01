@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
+    private static final String DATABASE_HELPER = "DatabaseHelper";
+
     public static final String DATABASE_NAME = "register.db";
     public static final String TABLE_NAME = "registeruser";
     public static final String ID = "id";
@@ -56,4 +58,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return false;
     }
+
+    public void deleteUser(String userName) {
+
+        System.out.println("ID to be deleted: "+getIdByUserName(userName));
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + TABLE_NAME + " WHERE " + ID + " = " + getIdByUserName(userName) ;
+        db.execSQL(query);
+
+    }
+
+    private String getIdByUserName(String userName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + ID + " FROM " + TABLE_NAME + " WHERE " + USERNAME + " = '" + userName + "'";
+        Cursor data = db.rawQuery(query, null);
+        data.moveToFirst();
+        return data.getString(data.getColumnIndex(ID));
+    }
+
 }
